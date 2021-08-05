@@ -5,6 +5,14 @@ use App\Http\Controllers\ItemController;
 
 
 Route::get('/', [ItemController::class, "index"])->name('homepage');
-Route::match(["get","post"], '/inset', [ItemController::class, "insert"])->name('insert');
-Route::post('/insertCat', [ItemController::class, "insertCat"])->name('insertCat');
+Route::get('/filter/{id}', [ItemController::class, "filter"])->name('filter');
+Route::post('/search', [ItemController::class, "search"])->name('search');
+Route::get('/view/{itemId}/category/{catId}', [ItemController::class, "view"])->name('view');
+Route:: match(["get" ,"post"], '/register', [ItemController::class, "register"])->name("register");
+Route:: match(["get", "post"], '/login', [ItemController::class, "login"])->name("login");
 
+Route::group(["middleware"=>"loginCheck"], function(){
+Route::get('/logout', [ItemController::class, "logout"])->name('logout');
+Route::match(["get","post"], '/insert', [ItemController::class, "insert"])->name('insert');
+Route::post('/insertCat', [ItemController::class, "insertCat"])->name('insertCat');
+});

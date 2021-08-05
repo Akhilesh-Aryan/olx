@@ -42,7 +42,15 @@
                             <select name="category" id="category" class="form-select">
                                 <option value="" hidden selected>Select Category</option>
                                 @foreach($cat as $c)
-                                    <option value="{{ $c->id }}">{{ $c->title }}</option>
+                                @php
+                                    if($c->parent_id == 0){
+                                        $flag = 1;
+                                    }
+                                    else{
+                                        $flag = 0;
+                                    }
+                                @endphp
+                                    <option value="{{ $c->id }}" <?= ($flag == 1 ? "disabled": "") ?> >{{ $c->title }}</option>
                                 @endforeach
                             </select>
                         </div>
